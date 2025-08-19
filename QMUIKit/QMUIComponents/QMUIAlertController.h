@@ -278,6 +278,13 @@ typedef NS_ENUM(NSInteger, QMUIAlertControllerStyle) {
  */
 @property(nonatomic, assign) BOOL orderActionsByAddedOrdered;
 
+/**
+ *  设置按钮的排序是否要严格按照用户添加的顺序来决定，默认为NO。
+ *
+ *  如果 strictOrderActionsByAddedOrdered 为 YES，则按钮的顺序将严格按照添加的顺序排列，不受其他因素影响。
+ */
+@property (nonatomic, assign) BOOL strictOrderActionsByAddedOrdered;
+
 /// dimmingView 是否响应点击，alert 默认为NO，sheet 默认为YES
 @property(nonatomic, assign) BOOL shouldRespondDimmingViewTouch;
 

@@ -605,10 +605,10 @@ static NSUInteger alertControllerCount = 0;
             }
             if (!verticalLayout) {
                 // 对齐系统，先 add 的在右边，后 add 的在左边
-                QMUIAlertAction *leftAction = newOrderActions[1];
+                QMUIAlertAction *leftAction = self.strictOrderActionsByAddedOrdered ? newOrderActions[0] : newOrderActions[1];
                 leftAction.button.frame = CGRectMake(0, contentOriginY, CGRectGetWidth(self.buttonScrollView.bounds) / 2, self.alertButtonHeight);
                 leftAction.button.qmui_borderPosition = QMUIViewBorderPositionRight;
-                QMUIAlertAction *rightAction = newOrderActions[0];
+                QMUIAlertAction *rightAction = self.strictOrderActionsByAddedOrdered ? newOrderActions[1] : newOrderActions[0];
                 rightAction.button.frame = CGRectMake(CGRectGetMaxX(leftAction.button.frame), contentOriginY, CGRectGetWidth(self.buttonScrollView.bounds) / 2, self.alertButtonHeight);
                 if (shouldShowSeparatorAtTopOfButtonAtFirstLine) {
                     leftAction.button.qmui_borderPosition |= QMUIViewBorderPositionTop;
@@ -796,6 +796,10 @@ static NSUInteger alertControllerCount = 0;
 }
 
 - (NSArray<QMUIAlertAction *> *)orderedAlertActions:(NSArray<QMUIAlertAction *> *)actions {
+    if (self.strictOrderActionsByAddedOrdered) {
+        return actions;
+    }
+    
     NSMutableArray<QMUIAlertAction *> *newActions = [[NSMutableArray alloc] init];
     // 按照用户addAction的先后顺序来排序
     if (self.orderActionsByAddedOrdered) {
